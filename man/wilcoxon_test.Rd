@@ -18,6 +18,16 @@ wilcoxon_test(
 \item{x}{A number}
 
 \item{y}{A number}
+
+\item{alternative}{A number}
+
+\item{mu}{A number}
+
+\item{paired}{A number}
+
+\item{exact}{A number}
+
+\item{correct}{A number}
 }
 \value{
 The sum of \code{x} and \code{y}
@@ -28,6 +38,5 @@ vectors of data, or performs a Wilcoxon Rank-Sum test on two unpaired
 vectors of data.
 }
 \examples{
-add(1, 1)
-add(10, 1)
+wilcoxon_test(1:5)
 }

@@ -6,10 +6,16 @@
 #'
 #' @param x A number
 #' @param y A number
+#' @param alternative A number
+#' @param mu A number
+#' @param paired A number
+#' @param exact A number
+#' @param correct A number
+#'
 #' @return The sum of \code{x} and \code{y}
 #' @examples
-#' add(1, 1)
-#' add(10, 1)
+#' wilcoxon_test(1:5)
+
 
 wilcoxon_test <- function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                           mu = 0, paired = FALSE, exact = NULL, correct = TRUE){
