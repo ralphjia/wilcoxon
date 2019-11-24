@@ -1,4 +1,17 @@
-wilcoxon_test <- function(x, y = NULL, alternative = c("two.sided", "less", "greater"), 
+#' Wilcoxon Signed Rank and Rank-Sum Tests
+#'
+#' Performs a Wilcoxon Signed Rank test on a vector of data or two paired
+#' vectors of data, or performs a Wilcoxon Rank-Sum test on two unpaired
+#' vectors of data.
+#'
+#' @param x A number
+#' @param y A number
+#' @return The sum of \code{x} and \code{y}
+#' @examples
+#' add(1, 1)
+#' add(10, 1)
+
+wilcoxon_test <- function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
                           mu = 0, paired = FALSE, exact = NULL, correct = TRUE){
   alternative <- match.arg(alternative) # Input must correspond to one of the options
   data.name <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
@@ -23,7 +36,7 @@ wilcoxon_test <- function(x, y = NULL, alternative = c("two.sided", "less", "gre
       names(mu) <- "location"
     }
     x <- x - mu
-    zero <- any(x == 0) 
+    zero <- any(x == 0)
     if(zero){ # Remove zeroes, cannot perform exact test anymore
       x <- x[x != 0]
     }
@@ -111,7 +124,7 @@ wilcoxon_test <- function(x, y = NULL, alternative = c("two.sided", "less", "gre
           p.value <- 2 * pwilcox(W, nx, ny)
         }
         else{
-          p.value <- 2 - 2 * pwilcox(W - 1, nx, ny) 
+          p.value <- 2 - 2 * pwilcox(W - 1, nx, ny)
         }
       }
       else if(alternative == "less"){
@@ -157,7 +170,7 @@ wilcoxon_test <- function(x, y = NULL, alternative = c("two.sided", "less", "gre
     }
   }
   wilcoxon_list <- list(statistic = W, parameter = NULL, p.value = p.value,
-                        null.value = mu, alternative = alternative, 
+                        null.value = mu, alternative = alternative,
                         method = method, data.name = data.name)
   class(wilcoxon_list) <- "htest"
   return(wilcoxon_list)
