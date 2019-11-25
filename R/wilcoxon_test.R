@@ -38,14 +38,14 @@
 #' calculating confidence intervals, or taking in a formula as an argument.
 #'
 #' @return A list of class "htest" consisting of the following:
-#' \describe{
-#'   \item{statistic}{the value of the test statistic}
-#'   \item{parameter}{for this test, NULL}
-#'   \item{p.value}{the p-value}
-#'   \item{null.value}{the value of mu}
-#'   \item{alternative}{the alternative hypothesis}
-#'   \item{method}{the type of test performed}
-#'   \item{data.name}{the name(s) of the supplied data}
+#' \itemize{
+#'   \item statistic - the value of the test statistic
+#'   \item parameter - for this test, NULL
+#'   \item p.value - the p-value
+#'   \item null.value - the value of mu
+#'   \item alternative - the alternative hypothesis
+#'   \item method - the type of test performed
+#'   \item data.name - the name(s) of the supplied data
 #' }
 #' @examples
 #' wilcoxon_test(1:5)
