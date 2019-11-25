@@ -15,27 +15,63 @@ wilcoxon_test(
 )
 }
 \arguments{
-\item{x}{A number}
+\item{x}{a numeric vector.}
 
-\item{y}{A number}
+\item{y}{an optional numeric vector.}
 
-\item{alternative}{A number}
+\item{alternative}{a string specifying the alternative hypothesis ("two.sided, "less", or "greater").
+Only the first letter is necessary. Defaults to two sided.}
 
-\item{mu}{A number}
+\item{mu}{a number representing a location or location difference to be tested for in the null hypothesis.
+Defaults to 0.}
 
-\item{paired}{A number}
+\item{paired}{a logical indicating whether to perform a paired or unpaired test.
+Defaults to false.}
 
-\item{exact}{A number}
+\item{exact}{a logical indicating whether to compute an exact p-value or an approximation.}
 
-\item{correct}{A number}
+\item{correct}{A logical indicating whether to use a continuity correction or not.}
 }
 \value{
-The sum of \code{x} and \code{y}
+A list of class "htest" consisting of the following:
+\describe{
+  \item{statistic}{the value of the test statistic}
+  \item{parameter}{for this test, NULL}
+  \item{p.value}{the p-value}
+  \item{null.value}{the value of mu}
+  \item{alternative}{the alternative hypothesis}
+  \item{method}{the type of test performed}
+  \item{data.name}{the name(s) of the supplied data}
+}
 }
 \description{
 Performs a Wilcoxon Signed Rank test on a vector of data or two paired
 vectors of data, or performs a Wilcoxon Rank-Sum test on two unpaired
 vectors of data.
+}
+\details{
+If either y is not supplied or both x and y are supplied and paired is true,
+then a Wilcoxon signed rank test is performed. The null hypothesis is that
+the median of x (or x-y in the paired case) is equal to mu.
+
+If both x and y are supplied and paired is false, then a Wilcoxon rank-sum
+(Mann-Whitney) test is performed. The null hypothesis is that the medians of
+x and y differ by a location shift of mu. The alternative hypothesis "greater"
+refers to x being shifted to the right of y.
+
+If exact is true, an exact p-value will be computed using the built-in
+psignrank() or pwilcox() distribution functions. If exact is false, the
+p-value is computed using a normal approximation. If exact is not supplied,
+exact will default to true if the sample size is greater than 50 and there
+are no ties. For the signed-rank test, there must also be no zeroes. Otherwise,
+exact will be set to false.
+
+The correct parameter is only relevant if exact is false. If correct is true,
+a continuity correction will be applied in order to perform the normal approximation.
+The correction is a shifting of the test statistic by 0.5.
+
+Unlike the built in function wilcox.test(), this function does not support
+calculating confidence intervals, or taking in a formula as an argument.
 }
 \examples{
 wilcoxon_test(1:5)
