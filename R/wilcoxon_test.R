@@ -47,7 +47,7 @@ wilcoxon_test <- function(x, y = NULL, alternative = c("two.sided", "less", "gre
       x <- x[x != 0]
     }
     n <- length(x)
-    ties <- n > length(unique(x)) # If there are ties, cannot perform exact test anymore
+    ties <- n > length(unique(abs(x))) # If there are ties, cannot perform exact test anymore
     ranks <- rank(abs(x))
     signed_ranks <- ranks * sign(x)
     W <- sum(signed_ranks[signed_ranks > 0])
@@ -175,6 +175,7 @@ wilcoxon_test <- function(x, y = NULL, alternative = c("two.sided", "less", "gre
       }
     }
   }
+  p.value <- unname(p.value)
   wilcoxon_list <- list(statistic = W, parameter = NULL, p.value = p.value,
                         null.value = mu, alternative = alternative,
                         method = method, data.name = data.name)
