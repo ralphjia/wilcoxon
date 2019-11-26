@@ -3,7 +3,8 @@
 #' Performs a Wilcoxon Signed Rank test on a vector of data or two paired
 #' vectors of data, or performs a Wilcoxon Rank-Sum test on two unpaired
 #' vectors of data.
-#' @usage wilcoxon_test(x, y = NULL, alternative = c("two.sided", "less", "greater"), mu = 0, paired = FALSE, exact = NULL, correct = TRUE)
+#' @usage wilcoxon_test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
+#' mu = 0, paired = FALSE, exact = NULL, correct = TRUE)
 #' @param x a numeric vector.
 #' @param y an optional numeric vector.
 #' @param alternative a string specifying the alternative hypothesis ("two.sided, "less", or "greater").

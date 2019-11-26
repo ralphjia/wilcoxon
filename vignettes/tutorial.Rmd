@@ -1,5 +1,5 @@
 ---
-title: "Tutorial"
+title: "Wilcoxon Test Tutorial"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{tutorial}
@@ -7,13 +7,66 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+Some example usage of the wilcoxon_test() function:
+```{r}
+library(wilcoxon)
+x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
+y <- c(0.878, 0.647, 0.598, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29)
 ```
 
-```{r setup}
-library(wilcoxon)
+Wilcoxon Signed-Rank Examples:
+
+```{r}
+wilcoxon_test(x)
+wilcoxon_test(x, y, paired = T, alternative = 'g')
+wilcoxon_test(x, y, paired = T, alternative = 'g', exact = F) # Notice the slight difference in p-value
 ```
+
+Wilcoxon Rank-Sum Examples:
+```{r}
+wilcoxon_test(x, y, paired = F, alternative = 'g')
+wilcoxon_test(x, y, paired = F, alternative = 'l', exact = F) 
+wilcoxon_test(x, y, paired = F, alternative = 'l', exact = F, correct = F) # Again, notice the slight difference in p-value
+```
+
+Structure of the return value:
+```{r}
+value <- wilcoxon_test(x, y, paired = F, alternative = 'g')
+str(value)
+
+```
+As we can see, the return value is a list of class "htest" consisting of the test statistic, the distribution parameter (which will always be NULL for a Wilcoxon test), the p-value, the null value (equal to mu), the alternative hypothesis, the method applied, and the name of the data that was supplied.
+
+
+Demonstration of the accuracy of the results of wilcoxon_test() by comparison to wilcox.test():
+
+```{r}
+all.equal(wilcoxon_test(x), wilcox.test(x))
+all.equal(wilcoxon_test(x, y, paired = T, alternative = 'g'), wilcox.test(x, y, paired = T, alternative = 'g'))
+all.equal(wilcoxon_test(x, y, paired = T, alternative = 'g', exact = F), wilcox.test(x, y, paired = T, alternative = 'g', exact = F))
+all.equal(wilcoxon_test(x, y, paired = F, alternative = 'l', exact = F), wilcox.test(x, y, paired = F, alternative = 'l', exact = F))
+all.equal(wilcoxon_test(x, y, paired = F, alternative = 'l', exact = F, correct = F), wilcoxon_test(x, y, paired = F, alternative = 'l', exact = F, correct = F))
+```
+
+Comparison of efficiency against wilcox.test():
+```{r}
+set.seed(1)
+a <- rnorm(500)
+b <- rnorm(500)
+comparison1 <- bench::mark(wilcoxon_test(a, exact = F), wilcox.test(a, exact = F)) # Wilcoxon Signed-Rank Test Comparison
+comparison2 <- bench::mark(wilcoxon_test(a, b, paired = F, exact = F), wilcox.test(a, b, paired = F, exact = F)) # Wilcoxon Rank-Sum Test Comparison
+summary(comparison1)
+```
+
+```{r, fig.width = 7, fig.height = 5}
+plot(comparison1)
+```
+
+```{r}
+summary(comparison2)
+```
+
+```{r, fig.width = 7, fig.height = 5}
+plot(comparison2)
+```
+As we can see, the efficiency of the two functions is nearly identical.
