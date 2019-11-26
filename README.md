@@ -14,4 +14,10 @@ The Wilcoxon signed rank test is a non-parametric hypothesis test that can be ap
 
 The Wilcoxon rank sum test is another non-parametric hypothesis test which can be applied to two samples, of any size. The Wilcoxon rank sum test can be used to test the null hypothesis that the difference of medians is equal to some location shift, mu. For this test, the two samples must be independent of each other, but it also does not require that the data be normally distributed. 
 
+Both of these tests are built into R through the function wilcox.test(). A comparison of wilcoxon_test() vs. wilcox.test() with regards to accuracy and efficiency can be found in the vignetttes. wilcox.test() is a more sophisticated function, in that it allows for computation of confidence intervals, whereas wilcoxon_test() will only calculate a test statistic and p-value.
 
+# Installation
+```
+devtools::install_github("ralphjia/wilcoxon")
+
+```
