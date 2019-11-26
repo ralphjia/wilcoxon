@@ -14,5 +14,9 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    covr
+    covr,
+    tidyr,
+    bench,
+    ggplot2,
+    ggbeeswarm
 VignetteBuilder: knitr

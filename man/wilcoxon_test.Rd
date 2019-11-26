@@ -4,7 +4,8 @@
 \alias{wilcoxon_test}
 \title{Wilcoxon Signed Rank and Rank-Sum Tests}
 \usage{
-wilcoxon_test(x, y = NULL, alternative = c("two.sided", "less", "greater"), mu = 0, paired = FALSE, exact = NULL, correct = TRUE)
+wilcoxon_test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
+mu = 0, paired = FALSE, exact = NULL, correct = TRUE)
 }
 \arguments{
 \item{x}{a numeric vector.}
