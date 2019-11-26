@@ -3,9 +3,7 @@
 #' Performs a Wilcoxon Signed Rank test on a vector of data or two paired
 #' vectors of data, or performs a Wilcoxon Rank-Sum test on two unpaired
 #' vectors of data.
-#' @usage wilcoxon_test(x, y = NULL, alternative = c("two.sided", "less", "greater"),
-#' mu = 0, paired = FALSE, exact = NULL, correct = TRUE)
-#'
+#' @usage wilcoxon_test(x, y = NULL, alternative = c("two.sided", "less", "greater"), mu = 0, paired = FALSE, exact = NULL, correct = TRUE)
 #' @param x a numeric vector.
 #' @param y an optional numeric vector.
 #' @param alternative a string specifying the alternative hypothesis ("two.sided, "less", or "greater").
@@ -32,6 +30,10 @@
 #' are no ties. For the signed-rank test, there must also be no zeroes. Otherwise,
 #' exact will be set to false.
 #'
+#' Warning: the built in function pwilcox() uses large amounts of memory and stack,
+#' so if exact is true and one of the samples is large (thousands or more), the
+#' function can crash R. To prevent this, exact should be set to false instead.
+#'
 #' The correct parameter is only relevant if exact is false. If correct is true,
 #' a continuity correction will be applied in order to perform the normal approximation.
 #' The correction is a shifting of the test statistic by 0.5.
@@ -50,7 +52,20 @@
 #'   \item data.name - the name(s) of the supplied data
 #' }
 #' @examples
-#' wilcoxon_test(1:5)
+#' x <- rnorm(50)
+#' y1 <- rnorm(50)
+#' y2 <- rnorm(100)
+#' y3 <- rnorm(5000)
+#' wilcoxon_test(x) # One-sample Wilcoxon signed-rank test
+#' wilcoxon_test(x, alternative = "g", mu = 2) # Alternative hypothesis is that the median of x is greater than 2
+#' wilcoxon_test(x, y1, paired = T) # Paired Wilcoxon signed-rank test
+#' wilcoxon_test(x, y2, paired = T) # Error, cannot perform paired test if vectors have different lengths
+#' wilcoxon_test(x, y1, paired = F) # Two-sample Wilcoxon rank-sum test
+#' wilcoxon_test(x, y2, paired = F, exact = T) # Calculates exact p-value from Wilcoxon rank-sum distribution
+#' wilcoxon_test(x, y2, paired = F, exact = F, correct = F) # Uses normal approximation to calculate p-value, without continuity correction
+#' wilcoxon_test(x, y2, paired = F, exact = F, correct = T) # Same as above, but with continuity correction
+#' wilcoxon_test(x, y3, exact = T) # y3 is too large, do not run with exact = T, could crash R
+#' wilcoxon_test(x, y3, exact = F) # Ok to run
 #' @export
 
 
