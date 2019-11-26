@@ -17,7 +17,7 @@ The Wilcoxon rank sum test is another non-parametric hypothesis test which can b
 Both of these tests are built into R through the function wilcox.test(). A comparison of wilcoxon_test() vs. wilcox.test() with regards to accuracy and efficiency can be found in the vignetttes. wilcox.test() is a more sophisticated function, in that it allows for computation of confidence intervals, whereas wilcoxon_test() will only calculate a test statistic and p-value.
 
 # Installation
-```
+```{r}
 devtools::install_github("ralphjia/wilcoxon")
-
 ```
+
